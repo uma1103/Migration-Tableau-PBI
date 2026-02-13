@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import pandas as pd
+import io
 from datetime import datetime
 
 # =========================================================
@@ -914,22 +915,24 @@ elif st.session_state.current_step == 2:
                 )
                 
                 # Create and download Excel specification
-                if 'components' in result['data'] and result['data']['components']:
-                    components_df = pd.DataFrame(result['data']['components'])
-                    excel_buffer = pd.ExcelWriter('temp.xlsx', engine='xlsxwriter')
-                    components_df.to_excel(excel_buffer, sheet_name='Components', index=False)
-                    excel_buffer.close()
+                components_df = pd.DataFrame(result['data']['components'])
+                components_df = pd.DataFrame(result['data']['components'])
+
+                output = io.BytesIO()
+                with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+                    components_df.to_excel(writer, sheet_name='Components', index=False)
+
+                excel_data = output.getvalue()
+
                     
-                    with open('temp.xlsx', 'rb') as f:
-                        excel_data = f.read()
-                    
-                    st.download_button(
-                        label="📥 Download Detailed Specifications (Excel)",
-                        data=excel_data,
-                        file_name=f"PowerBI_Specifications_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
-                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                        use_container_width=True
-                    )
+                st.download_button(
+                label="📥 Download Detailed Specifications (Excel)",
+                data=excel_data,
+                file_name=f"PowerBI_Specifications_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True
+            )
+
                 
                 st.markdown("""
                 <div class="info-box">
