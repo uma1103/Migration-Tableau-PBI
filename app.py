@@ -1108,7 +1108,7 @@ elif st.session_state.current_step == 3:
     st.markdown('</div>', unsafe_allow_html=True)
 
 # =========================================================
-# FOOTER new
+# FOOTER
 # =========================================================
 
 st.markdown("""
