@@ -1,7 +1,6 @@
 import streamlit as st
 import time
 import pandas as pd
-import io
 from datetime import datetime
 
 # =========================================================
@@ -67,21 +66,22 @@ def migration_function(tableau_path, workspace, data_source, report_name):
         }
 
 
-def deployment_function(migration_data):
+def deployment_function(migration_data, enable_rls, schedule_refresh, enable_sharing, send_notification):
     """
     Dummy deployment function - Replace with your actual implementation
     
-    This function generates a development guide document based on the Tableau dashboard
-    that users can use to manually develop the Power BI dashboard.
-    
     Args:
-        migration_data (dict): Data from migration step containing Tableau analysis
+        migration_data (dict): Data from migration step
+        enable_rls (bool): Enable row-level security
+        schedule_refresh (bool): Schedule dataset refresh
+        enable_sharing (bool): Enable report sharing
+        send_notification (bool): Send deployment notification
     
     Returns:
         dict: {
             'success': bool,
             'message': str,
-            'data': dict with deployment guide details
+            'data': dict with deployment details
         }
     """
     try:
@@ -96,53 +96,30 @@ def deployment_function(migration_data):
                 'data': {}
             }
         
-        # Generate development guide
+        # Simulate deployment
         workspace_name = migration_data.get('workspace', 'Unknown')
         report_name = migration_data.get('report_name', 'Unknown')
         
-        # Create development guide content
-        guide_content = f"""POWER BI DEVELOPMENT GUIDE
-Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-Report: {report_name}
-Workspace: {workspace_name}
-
-1. DATA SOURCES ({migration_data.get('data_sources', 0)} connections)
-   - Follow connection strings from migration analysis
-   - Configure data refresh schedules
-   
-2. CALCULATED FIELDS ({migration_data.get('calculated_fields', 0)} fields)
-   - DAX formulas provided in detailed mapping
-   - Parameter configurations included
-   
-3. VISUALIZATIONS ({migration_data.get('dashboards', 0)} dashboards)
-   - Layout specifications attached
-   - Visual types and configurations mapped
-   
-4. FORMATTING GUIDELINES
-   - Color schemes and branding
-   - Font specifications
-   - Layout dimensions
-
-Please refer to the detailed spreadsheet for complete specifications.
-"""
-        
-        # Return success with deployment guide
+        # Return success with deployment data
         return {
             'success': True,
-            'message': 'Development guide generated successfully',
+            'message': 'Deployment completed successfully',
             'data': {
                 'workspace': workspace_name,
                 'report_name': report_name,
-                'guide_content': guide_content,
-                'generation_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                'status': 'Ready for Development',
-                'components': migration_data.get('components', [])
+                'report_id': 'rpt_' + str(hash(report_name))[-8:],
+                'deployment_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'status': 'Active',
+                'report_url': f'https://app.powerbi.com/groups/workspace-{hash(workspace_name)}/reports/{hash(report_name)}',
+                'rls_enabled': enable_rls,
+                'refresh_scheduled': schedule_refresh,
+                'sharing_enabled': enable_sharing
             }
         }
     except Exception as e:
         return {
             'success': False,
-            'message': f'Guide generation failed: {str(e)}',
+            'message': f'Deployment failed: {str(e)}',
             'data': {}
         }
 
@@ -150,12 +127,6 @@ Please refer to the detailed spreadsheet for complete specifications.
 def testing_function(deployment_data, test_config):
     """
     Dummy testing function - Replace with your actual implementation
-    
-    Performs validation tests on the manually developed Power BI dashboard:
-    - Data Validation: Verify data accuracy and completeness
-    - Visual Validation: Check visual types and configurations
-    - Layout Comparison: Compare layout with Tableau original
-    - Color/Font Comparison: Verify branding consistency
     
     Args:
         deployment_data (dict): Data from deployment step
@@ -183,68 +154,77 @@ def testing_function(deployment_data, test_config):
         # Build test results based on configuration
         test_results = []
         
-        if test_config.get('data_validation', False):
+        if test_config.get('data_accuracy', False):
             test_results.append({
-                'category': 'Data Validation',
-                'tests_run': 85,
-                'passed': 85,
+                'category': 'Data Accuracy',
+                'tests_run': 45,
+                'passed': 45,
                 'failed': 0,
-                'status': 'Passed',
-                'details': 'Row counts, column types, aggregations verified'
+                'status': 'Passed'
             })
         
-        if test_config.get('visual_validation', False):
+        if test_config.get('calculations', False):
             test_results.append({
-                'category': 'Visual Validation',
-                'tests_run': 42,
-                'passed': 42,
+                'category': 'Calculation Verification',
+                'tests_run': 156,
+                'passed': 156,
                 'failed': 0,
-                'status': 'Passed',
-                'details': 'Chart types, legends, axes configurations matched'
+                'status': 'Passed'
             })
         
-        if test_config.get('layout_comparison', False):
+        if test_config.get('visuals', False):
             test_results.append({
-                'category': 'Layout Comparison',
+                'category': 'Visual Rendering',
+                'tests_run': 72,
+                'passed': 72,
+                'failed': 0,
+                'status': 'Passed'
+            })
+        
+        if test_config.get('performance', False):
+            test_results.append({
+                'category': 'Performance',
                 'tests_run': 28,
                 'passed': 28,
                 'failed': 0,
-                'status': 'Passed',
-                'details': 'Dashboard structure, visual placement, sizing verified'
+                'status': 'Passed'
             })
         
-        if test_config.get('color_font_comparison', False):
+        if test_config.get('interactions', False):
             test_results.append({
-                'category': 'Color/Font Comparison',
+                'category': 'Interactions',
                 'tests_run': 36,
                 'passed': 36,
                 'failed': 0,
-                'status': 'Passed',
-                'details': 'Color schemes, fonts, branding elements matched'
+                'status': 'Passed'
+            })
+        
+        if test_config.get('accessibility', False):
+            test_results.append({
+                'category': 'Accessibility',
+                'tests_run': 15,
+                'passed': 15,
+                'failed': 0,
+                'status': 'Passed'
             })
         
         # Calculate totals
         total_tests = sum(r['tests_run'] for r in test_results)
         total_passed = sum(r['passed'] for r in test_results)
-        total_failed = sum(r['failed'] for r in test_results)
-        
-        # Calculate accuracy percentage
-        accuracy = 100 if total_tests > 0 else 0
         
         # Return success with test data
         return {
             'success': True,
-            'message': 'All validation tests passed successfully',
+            'message': 'All tests passed successfully',
             'data': {
                 'test_results': test_results,
                 'total_tests': total_tests,
                 'total_passed': total_passed,
-                'total_failed': total_failed,
-                'accuracy': accuracy,
-                'data_match_score': 100,
-                'visual_match_score': 100,
-                'layout_match_score': 100,
-                'branding_match_score': 100
+                'total_failed': 0,
+                'accuracy': 100,
+                'calculations_verified': 156,
+                'visuals_validated': 18,
+                'avg_query_time': 0.8
             }
         }
     except Exception as e:
@@ -636,7 +616,7 @@ if st.session_state.testing_complete:
     step3_class += " completed"
 
 step1_icon = "✓" if st.session_state.migration_complete else "🔄"
-step2_icon = "✓" if st.session_state.deployment_complete else "📄"
+step2_icon = "✓" if st.session_state.deployment_complete else "🚀"
 step3_icon = "✓" if st.session_state.testing_complete else "🧪"
 
 st.markdown(f"""
@@ -650,11 +630,11 @@ st.markdown(f"""
     </div>
     <div class="{step2_class}">
         <div class="progress-circle">{step2_icon}</div>
-        <div class="progress-label">Dev Guide</div>
+        <div class="progress-label">Deployment</div>
     </div>
     <div class="{step3_class}">
         <div class="progress-circle">{step3_icon}</div>
-        <div class="progress-label">Validation</div>
+        <div class="progress-label">Testing</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -668,12 +648,12 @@ with col1:
         st.rerun()
 
 with col2:
-    if st.button("📍 Dev Guide", key="nav2", disabled=not st.session_state.migration_complete, use_container_width=True):
+    if st.button("📍 Deployment", key="nav2", disabled=not st.session_state.migration_complete, use_container_width=True):
         st.session_state.current_step = 2
         st.rerun()
 
 with col3:
-    if st.button("📍 Validation", key="nav3", disabled=not st.session_state.deployment_complete, use_container_width=True):
+    if st.button("📍 Testing", key="nav3", disabled=not st.session_state.deployment_complete, use_container_width=True):
         st.session_state.current_step = 3
         st.rerun()
 
@@ -831,15 +811,15 @@ elif st.session_state.current_step == 2:
     st.markdown('<div class="content-card">', unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="step-title">🚀 Development Guide Generation</div>
+    <div class="step-title">🚀 Power BI Deployment</div>
     <div class="step-description">
-        Generate a comprehensive development guide based on your Tableau dashboard analysis. 
-        This document will help you manually develop the Power BI dashboard with all necessary specifications.
+        Deploy your migrated report to Power BI Service. The deployment process includes authentication, 
+        dataset publishing, and report configuration.
     </div>
     """, unsafe_allow_html=True)
     
     if not st.session_state.migration_complete:
-        st.markdown('<div class="warning-alert">⚠️ Please complete the Migration step before proceeding to Development Guide.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="warning-alert">⚠️ Please complete the Migration step before proceeding to Deployment.</div>', unsafe_allow_html=True)
     else:
         # Display migration summary
         st.markdown("### 📋 Migration Summary")
@@ -854,29 +834,28 @@ elif st.session_state.current_step == 2:
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # Information about the development guide
-        st.markdown("""
-        <div class="info-box">
-            <strong>📝 Development Guide:</strong> This guide contains detailed specifications for developing 
-            the Power BI dashboard including data connections, DAX formulas, visual configurations, layout specifications, 
-            and branding guidelines. Use this document as a reference to manually build your Power BI dashboard.
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div class="warning-alert">
-            <strong>⚠️ Note:</strong> Automatic deployment is currently in progress and will be available in future releases. 
-            For now, please use the downloadable development guide to manually create your Power BI dashboard.
-        </div>
-        """, unsafe_allow_html=True)
+        # Deployment configuration
+        col1, col2 = st.columns(2)
+        with col1:
+            enable_rls = st.checkbox("Enable Row-Level Security", value=True)
+            schedule_refresh = st.checkbox("Schedule Dataset Refresh", value=True)
+        with col2:
+            enable_sharing = st.checkbox("Enable Report Sharing", value=False)
+            send_notification = st.checkbox("Send Deployment Notification", value=True)
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        if st.button("📄 Generate Development Guide", key="start_deploy", use_container_width=True):
+        if st.button("🚀 Deploy to Power BI", key="start_deploy", use_container_width=True):
             
-            with st.spinner("Generating development guide..."):
-                # Call the deployment function (now generates guide)
-                result = deployment_function(st.session_state.migration_data)
+            with st.spinner("Running deployment process..."):
+                # Call the deployment function
+                result = deployment_function(
+                    st.session_state.migration_data,
+                    enable_rls,
+                    schedule_refresh,
+                    enable_sharing,
+                    send_notification
+                )
             
             if result['success']:
                 # Store deployment data for next step
@@ -885,73 +864,37 @@ elif st.session_state.current_step == 2:
                 
                 st.markdown(f'<div class="success-alert">✅ {result["message"]}</div>', unsafe_allow_html=True)
                 
-                # Display guide details
-                st.markdown("### 📊 Development Guide Details")
-                st.markdown(f"**Report Name:** {result['data'].get('report_name', 'N/A')}")
+                # Display deployment details
+                st.markdown("### 📊 Deployment Details")
                 st.markdown(f"**Workspace:** {result['data'].get('workspace', 'N/A')}")
-                st.markdown(f"**Generated:** {result['data'].get('generation_time', 'N/A')}")
+                st.markdown(f"**Report:** {result['data'].get('report_name', 'N/A')}")
+                st.markdown(f"**Report ID:** {result['data'].get('report_id', 'N/A')}")
+                st.markdown(f"**Deployment Time:** {result['data'].get('deployment_time', 'N/A')}")
                 st.markdown(f"**Status:** 🟢 {result['data'].get('status', 'Unknown')}")
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                # Display component mapping
-                if 'components' in result['data'] and result['data']['components']:
-                    st.markdown("### 📋 Component Mapping")
-                    components_df = pd.DataFrame(result['data']['components'])
-                    components_df.columns = ['Component', 'Original Count', 'Migrated', 'Status']
-                    components_df['Status'] = '✅ ' + components_df['Status']
-                    st.dataframe(components_df, use_container_width=True, hide_index=True)
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                
-                # Download button for development guide
-                guide_content = result['data'].get('guide_content', 'Development guide content')
-                st.download_button(
-                    label="📥 Download Development Guide (TXT)",
-                    data=guide_content,
-                    file_name=f"PowerBI_Development_Guide_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
-                    mime="text/plain",
-                    use_container_width=True
-                )
-                
-                # Create and download Excel specification
-                components_df = pd.DataFrame(result['data']['components'])
-                components_df = pd.DataFrame(result['data']['components'])
-
-                output = io.BytesIO()
-                with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-                    components_df.to_excel(writer, sheet_name='Components', index=False)
-
-                excel_data = output.getvalue()
-
-                    
-                st.download_button(
-                label="📥 Download Detailed Specifications (Excel)",
-                data=excel_data,
-                file_name=f"PowerBI_Specifications_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                use_container_width=True
-            )
-
+                # Report link
+                report_url = result['data'].get('report_url', 'https://app.powerbi.com')
+                st.link_button("🔗 Open Report in Power BI", report_url, use_container_width=True)
                 
                 st.markdown("""
                 <div class="info-box">
-                    <strong>📊 Next Steps:</strong><br>
-                    1. Download the development guide and specifications<br>
-                    2. Use the documents to manually develop your Power BI dashboard<br>
-                    3. Once development is complete, proceed to Testing for validation
+                    <strong>📊 Report Preview:</strong> Your report is now live in Power BI Service. 
+                    Click the button above to view it in your workspace. You can also embed this report 
+                    in SharePoint, Teams, or other applications.
                 </div>
                 """, unsafe_allow_html=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
-                if st.button("Continue to Validation →", key="goto_test", use_container_width=True):
+                if st.button("Continue to Testing →", key="goto_test", use_container_width=True):
                     st.session_state.current_step = 3
                     st.rerun()
             
             else:
-                # Guide generation failed
+                # Deployment failed
                 st.markdown(f'<div class="error-alert">❌ {result["message"]}</div>', unsafe_allow_html=True)
-                st.error("Please check the migration data and try again.")
+                st.error("Please check the deployment configuration and try again.")
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -963,37 +906,27 @@ elif st.session_state.current_step == 3:
     st.markdown('<div class="content-card">', unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="step-title">🧪 Dashboard Validation & Comparison</div>
+    <div class="step-title">🧪 Automated Testing & Validation</div>
     <div class="step-description">
-        Validate your manually developed Power BI dashboard against the original Tableau dashboard. 
-        Run comprehensive tests to ensure data accuracy, visual fidelity, layout consistency, and branding compliance.
+        Run comprehensive validation tests to ensure your migrated report maintains data accuracy, 
+        performance standards, and visual fidelity.
     </div>
     """, unsafe_allow_html=True)
     
     if not st.session_state.deployment_complete:
-        st.markdown('<div class="warning-alert">⚠️ Please complete the Development Guide step before proceeding to Testing.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="warning-alert">⚠️ Please complete the Deployment step before proceeding to Testing.</div>', unsafe_allow_html=True)
     else:
-        st.markdown("### 🔧 Validation Configuration")
-        
-        st.markdown("""
-        <div class="info-box">
-            <strong>💡 About Validation:</strong> These tests compare your developed Power BI dashboard 
-            against the original Tableau dashboard to ensure accurate migration and maintain consistency 
-            in data, visuals, layout, and branding.
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("### 🔧 Test Configuration")
         
         col1, col2 = st.columns(2)
         with col1:
-            test_data_validation = st.checkbox("Data Validation", value=True, 
-                help="Verify row counts, column types, data accuracy, and aggregation calculations")
-            test_visual_validation = st.checkbox("Visual Validation", value=True,
-                help="Check chart types, legends, axes, tooltips, and visual configurations")
+            test_data_accuracy = st.checkbox("Data Accuracy Validation", value=True)
+            test_calculations = st.checkbox("Calculation Verification", value=True)
+            test_visuals = st.checkbox("Visual Rendering Tests", value=True)
         with col2:
-            test_layout_comparison = st.checkbox("Layout Comparison", value=True,
-                help="Compare dashboard structure, visual placement, sizing, and alignment")
-            test_color_font_comparison = st.checkbox("Color/Font Comparison", value=True,
-                help="Verify color schemes, fonts, branding elements, and styling")
+            test_performance = st.checkbox("Performance Benchmarking", value=True)
+            test_interactions = st.checkbox("Interaction & Filter Tests", value=True)
+            test_accessibility = st.checkbox("Accessibility Compliance", value=False)
         
         st.markdown("<br>", unsafe_allow_html=True)
         
@@ -1001,13 +934,15 @@ elif st.session_state.current_step == 3:
             
             # Prepare test configuration
             test_config = {
-                'data_validation': test_data_validation,
-                'visual_validation': test_visual_validation,
-                'layout_comparison': test_layout_comparison,
-                'color_font_comparison': test_color_font_comparison
+                'data_accuracy': test_data_accuracy,
+                'calculations': test_calculations,
+                'visuals': test_visuals,
+                'performance': test_performance,
+                'interactions': test_interactions,
+                'accessibility': test_accessibility
             }
             
-            with st.spinner("Running validation tests..."):
+            with st.spinner("Running test suite..."):
                 # Call the testing function
                 result = testing_function(st.session_state.deployment_data, test_config)
             
@@ -1024,71 +959,59 @@ elif st.session_state.current_step == 3:
                 with col1:
                     st.markdown(f"""
                     <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('data_match_score', 0)}%</div>
-                        <div class="metric-label">Data Match</div>
+                        <div class="metric-value">{result['data'].get('accuracy', 0)}%</div>
+                        <div class="metric-label">Data Accuracy</div>
                     </div>
                     """, unsafe_allow_html=True)
                 
                 with col2:
                     st.markdown(f"""
                     <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('visual_match_score', 0)}%</div>
-                        <div class="metric-label">Visual Match</div>
+                        <div class="metric-value">{result['data'].get('calculations_verified', 0)}/{result['data'].get('calculations_verified', 0)}</div>
+                        <div class="metric-label">Calculations Verified</div>
                     </div>
                     """, unsafe_allow_html=True)
                 
                 with col3:
                     st.markdown(f"""
                     <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('layout_match_score', 0)}%</div>
-                        <div class="metric-label">Layout Match</div>
+                        <div class="metric-value">{result['data'].get('visuals_validated', 0)}/{result['data'].get('visuals_validated', 0)}</div>
+                        <div class="metric-label">Visuals Validated</div>
                     </div>
                     """, unsafe_allow_html=True)
                 
                 with col4:
                     st.markdown(f"""
                     <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('branding_match_score', 0)}%</div>
-                        <div class="metric-label">Branding Match</div>
+                        <div class="metric-value">{result['data'].get('avg_query_time', 0)}s</div>
+                        <div class="metric-label">Avg Query Time</div>
                     </div>
                     """, unsafe_allow_html=True)
                 
                 # Display test results table
-                if 'test_results' in result['data'] and result['data']['test_results']:
-                    st.markdown("### 📊 Detailed Validation Results")
+                if 'test_results' in result['data']:
+                    st.markdown("### 📊 Detailed Test Results")
                     
                     test_df = pd.DataFrame(result['data']['test_results'])
-                    test_df.columns = ['Test Category', 'Tests Run', 'Passed', 'Failed', 'Status', 'Details']
+                    test_df.columns = ['Test Category', 'Tests Run', 'Passed', 'Failed', 'Status']
                     test_df['Status'] = '✅ ' + test_df['Status']
                     
                     st.dataframe(test_df, use_container_width=True, hide_index=True)
                     
-                    # Summary stats
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        st.metric("Total Tests", result['data'].get('total_tests', 0))
-                    with col2:
-                        st.metric("Tests Passed", result['data'].get('total_passed', 0), 
-                                delta=f"{result['data'].get('accuracy', 0)}%")
-                    with col3:
-                        st.metric("Tests Failed", result['data'].get('total_failed', 0))
-                    
                     csv = test_df.to_csv(index=False)
                     st.download_button(
-                        label="📥 Download Validation Report",
+                        label="📥 Download Test Report",
                         data=csv,
-                        file_name=f"Validation_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                        file_name=f"Test_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
                         mime="text/csv",
                         use_container_width=True
                     )
                 
                 st.markdown("""
                 <div class="info-box">
-                    <strong>🎉 Validation Complete!</strong><br>
-                    Your Power BI dashboard has been validated against the original Tableau dashboard. 
-                    All validation tests have passed, confirming that data accuracy, visual configurations, 
-                    layout structure, and branding elements match the original specifications.
+                    <strong>🎉 Migration Complete!</strong><br>
+                    Your Tableau workbook has been successfully migrated, deployed, and validated. 
+                    The Power BI report is now ready for production use. All tests have passed with 100% accuracy.
                 </div>
                 """, unsafe_allow_html=True)
                 
