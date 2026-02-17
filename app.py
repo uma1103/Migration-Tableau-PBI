@@ -4,39 +4,15 @@ import pandas as pd
 from datetime import datetime
 
 # =========================================================
-# DUMMY FUNCTIONS - REPLACE THESE WITH YOUR ACTUAL FUNCTIONS
+# DUMMY FUNCTIONS
 # =========================================================
 
 def migration_function(tableau_path, workspace, data_source, report_name):
-    """
-    Dummy migration function - Replace with your actual implementation
-    
-    Args:
-        tableau_path (str): Path to Tableau workbook
-        workspace (str): Power BI workspace name
-        data_source (str): Data source connection string
-        report_name (str): Name for the migrated report
-    
-    Returns:
-        dict: {
-            'success': bool,
-            'message': str,
-            'data': dict with migration details
-        }
-    """
     try:
-        # Simulate processing time
         time.sleep(2)
-        
-        # Simulate some validation
         if not tableau_path or not workspace:
-            return {
-                'success': False,
-                'message': 'Missing required parameters',
-                'data': {}
-            }
+            return {'success': False, 'message': 'Missing required parameters', 'data': {}}
         
-        # Return success with migration data
         return {
             'success': True,
             'message': 'Migration completed successfully',
@@ -44,9 +20,6 @@ def migration_function(tableau_path, workspace, data_source, report_name):
                 'data_sources': 24,
                 'calculated_fields': 156,
                 'dashboards': 18,
-                'parameters': 12,
-                'filters': 45,
-                'visuals': 203,
                 'success_rate': 100,
                 'components': [
                     {'name': 'Data Connections', 'original': 24, 'migrated': 24, 'status': 'Complete'},
@@ -59,48 +32,18 @@ def migration_function(tableau_path, workspace, data_source, report_name):
             }
         }
     except Exception as e:
-        return {
-            'success': False,
-            'message': f'Migration failed: {str(e)}',
-            'data': {}
-        }
+        return {'success': False, 'message': f'Migration failed: {str(e)}', 'data': {}}
 
 
 def deployment_function(migration_data, enable_rls, schedule_refresh, enable_sharing, send_notification):
-    """
-    Dummy deployment function - Replace with your actual implementation
-    
-    Args:
-        migration_data (dict): Data from migration step
-        enable_rls (bool): Enable row-level security
-        schedule_refresh (bool): Schedule dataset refresh
-        enable_sharing (bool): Enable report sharing
-        send_notification (bool): Send deployment notification
-    
-    Returns:
-        dict: {
-            'success': bool,
-            'message': str,
-            'data': dict with deployment details
-        }
-    """
     try:
-        # Simulate processing time
         time.sleep(2)
-        
-        # Validate migration data
         if not migration_data or 'report_name' not in migration_data:
-            return {
-                'success': False,
-                'message': 'Invalid migration data',
-                'data': {}
-            }
+            return {'success': False, 'message': 'Invalid migration data', 'data': {}}
         
-        # Simulate deployment
         workspace_name = migration_data.get('workspace', 'Unknown')
         report_name = migration_data.get('report_name', 'Unknown')
         
-        # Return success with deployment data
         return {
             'success': True,
             'message': 'Deployment completed successfully',
@@ -111,108 +54,41 @@ def deployment_function(migration_data, enable_rls, schedule_refresh, enable_sha
                 'deployment_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 'status': 'Active',
                 'report_url': f'https://app.powerbi.com/groups/workspace-{hash(workspace_name)}/reports/{hash(report_name)}',
-                'rls_enabled': enable_rls,
-                'refresh_scheduled': schedule_refresh,
-                'sharing_enabled': enable_sharing
             }
         }
     except Exception as e:
-        return {
-            'success': False,
-            'message': f'Deployment failed: {str(e)}',
-            'data': {}
-        }
+        return {'success': False, 'message': f'Deployment failed: {str(e)}', 'data': {}}
 
 
 def testing_function(deployment_data, test_config):
-    """
-    Dummy testing function - Replace with your actual implementation
-    
-    Args:
-        deployment_data (dict): Data from deployment step
-        test_config (dict): Test configuration with enabled tests
-    
-    Returns:
-        dict: {
-            'success': bool,
-            'message': str,
-            'data': dict with test results
-        }
-    """
     try:
-        # Simulate processing time
         time.sleep(2)
-        
-        # Validate deployment data
         if not deployment_data or 'report_name' not in deployment_data:
-            return {
-                'success': False,
-                'message': 'Invalid deployment data',
-                'data': {}
-            }
+            return {'success': False, 'message': 'Invalid deployment data', 'data': {}}
         
-        # Build test results based on configuration
         test_results = []
         
         if test_config.get('data_accuracy', False):
-            test_results.append({
-                'category': 'Data Accuracy',
-                'tests_run': 45,
-                'passed': 45,
-                'failed': 0,
-                'status': 'Passed'
-            })
+            test_results.append({'category': 'Data Accuracy', 'tests_run': 45, 'passed': 45, 'failed': 0, 'status': 'Passed'})
         
         if test_config.get('calculations', False):
-            test_results.append({
-                'category': 'Calculation Verification',
-                'tests_run': 156,
-                'passed': 156,
-                'failed': 0,
-                'status': 'Passed'
-            })
+            test_results.append({'category': 'Calculation Verification', 'tests_run': 156, 'passed': 156, 'failed': 0, 'status': 'Passed'})
         
         if test_config.get('visuals', False):
-            test_results.append({
-                'category': 'Visual Rendering',
-                'tests_run': 72,
-                'passed': 72,
-                'failed': 0,
-                'status': 'Passed'
-            })
+            test_results.append({'category': 'Visual Rendering', 'tests_run': 72, 'passed': 72, 'failed': 0, 'status': 'Passed'})
         
         if test_config.get('performance', False):
-            test_results.append({
-                'category': 'Performance',
-                'tests_run': 28,
-                'passed': 28,
-                'failed': 0,
-                'status': 'Passed'
-            })
+            test_results.append({'category': 'Performance', 'tests_run': 28, 'passed': 28, 'failed': 0, 'status': 'Passed'})
         
         if test_config.get('interactions', False):
-            test_results.append({
-                'category': 'Interactions',
-                'tests_run': 36,
-                'passed': 36,
-                'failed': 0,
-                'status': 'Passed'
-            })
+            test_results.append({'category': 'Interactions', 'tests_run': 36, 'passed': 36, 'failed': 0, 'status': 'Passed'})
         
         if test_config.get('accessibility', False):
-            test_results.append({
-                'category': 'Accessibility',
-                'tests_run': 15,
-                'passed': 15,
-                'failed': 0,
-                'status': 'Passed'
-            })
+            test_results.append({'category': 'Accessibility', 'tests_run': 15, 'passed': 15, 'failed': 0, 'status': 'Passed'})
         
-        # Calculate totals
         total_tests = sum(r['tests_run'] for r in test_results)
         total_passed = sum(r['passed'] for r in test_results)
         
-        # Return success with test data
         return {
             'success': True,
             'message': 'All tests passed successfully',
@@ -228,20 +104,17 @@ def testing_function(deployment_data, test_config):
             }
         }
     except Exception as e:
-        return {
-            'success': False,
-            'message': f'Testing failed: {str(e)}',
-            'data': {}
-        }
+        return {'success': False, 'message': f'Testing failed: {str(e)}', 'data': {}}
 
 # =========================================================
-# STREAMLIT APP CONFIGURATION
+# PAGE CONFIG
 # =========================================================
 
 st.set_page_config(
     page_title="Visa BI Migration Platform",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    page_icon="💳"
 )
 
 # =========================================================
@@ -250,311 +123,415 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --visa-navy: #1A1F71;
+    --visa-blue: #00579F;
+    --visa-gold: #F7B600;
+}
 
 * {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+#MainMenu, footer, header {visibility: hidden;}
 
 .main {
-    background: linear-gradient(135deg, #F4F6FA 0%, #E8EBF5 100%);
-    padding: 2rem 1rem;
+    background: linear-gradient(180deg, #F9FAFB 0%, #FFFFFF 100%);
 }
 
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
+.block-container {
+    padding: 2rem 3rem !important;
+    max-width: 1600px;
+    margin: 0 auto;
+}
 
-.top-banner {
-    background: linear-gradient(135deg, #1A1F71 0%, #3B4CC0 100%);
-    padding: 2.5rem 3rem;
-    border-radius: 20px;
+/* Header */
+.premium-header {
+    background: linear-gradient(135deg, var(--visa-navy) 0%, #1434A4 100%);
+    padding: 3rem 4rem;
+    border-radius: 24px;
     margin-bottom: 3rem;
-    box-shadow: 0 10px 40px rgba(26, 31, 113, 0.25);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.top-banner::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 400px;
-    height: 400px;
-    background: rgba(247, 182, 0, 0.1);
-    border-radius: 50%;
-}
-
-.banner-content {
-    position: relative;
-    z-index: 1;
-}
-
-.banner-title {
-    font-size: 42px;
+.header-title {
+    font-size: 44px;
     font-weight: 800;
     color: white;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.5px;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.02em;
 }
 
-.banner-subtitle {
-    color: rgba(255, 255, 255, 0.85);
+.header-subtitle {
     font-size: 18px;
     font-weight: 500;
-    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 1.5rem 0;
 }
 
-.banner-badge {
-    display: inline-block;
-    background: #F7B600;
-    color: #1A1F71;
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.progress-tracker {
+.header-badges {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 900px;
-    margin: 3rem auto 2.5rem auto;
-    position: relative;
+    gap: 12px;
 }
 
-.progress-line {
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+}
+
+.badge-icon {
+    width: 16px;
+    height: 16px;
+    background: var(--visa-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--visa-navy);
+}
+
+/* Stepper */
+.stepper-container {
+    max-width: 1200px;
+    margin: 0 auto 3rem auto;
+}
+
+.stepper {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+
+.stepper-line {
     position: absolute;
     top: 28px;
-    left: 10%;
-    right: 10%;
-    height: 4px;
-    background: #E5E7EB;
-    z-index: 0;
+    left: 15%;
+    right: 15%;
+    height: 3px;
+    background: #E4E7EB;
+    border-radius: 10px;
 }
 
-.progress-line-fill {
+.stepper-line-progress {
     height: 100%;
-    background: linear-gradient(90deg, #1A1F71 0%, #3B4CC0 100%);
-    transition: width 0.5s ease;
+    background: linear-gradient(90deg, var(--visa-navy) 0%, var(--visa-blue) 50%, var(--visa-gold) 100%);
+    border-radius: 10px;
+    transition: width 0.6s ease;
 }
 
-.progress-step {
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     flex: 1;
-    text-align: center;
     position: relative;
     z-index: 1;
 }
 
-.progress-circle {
+.step-circle {
     width: 56px;
     height: 56px;
     border-radius: 50%;
     background: white;
-    border: 4px solid #E5E7EB;
-    margin: 0 auto 12px auto;
+    border: 3px solid #E4E7EB;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.progress-step.active .progress-circle {
-    background: linear-gradient(135deg, #1A1F71 0%, #3B4CC0 100%);
-    border-color: #1A1F71;
-    box-shadow: 0 6px 20px rgba(26, 31, 113, 0.3);
-    transform: scale(1.1);
+.step.active .step-circle {
+    background: var(--visa-navy);
+    border-color: var(--visa-navy);
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(26, 31, 113, 0.1);
+    transform: scale(1.08);
+}
+
+.step.completed .step-circle {
+    background: #059669;
+    border-color: #059669;
     color: white;
 }
 
-.progress-step.completed .progress-circle {
-    background: #10B981;
-    border-color: #10B981;
-    color: white;
-}
-
-.progress-label {
-    font-size: 15px;
+.step-label {
+    font-size: 14px;
     font-weight: 600;
     color: #6B7280;
-    margin-top: 8px;
 }
 
-.progress-step.active .progress-label {
-    color: #1A1F71;
+.step.active .step-label {
+    color: var(--visa-navy);
     font-weight: 700;
 }
 
+.step-number {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-top: 4px;
+}
+
+/* Content Card */
 .content-card {
     background: white;
-    padding: 3rem;
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    padding: 3rem;
     margin-bottom: 2rem;
+    border: 1px solid #E4E7EB;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.step-title {
-    font-size: 32px;
+.section-title {
+    font-size: 28px;
     font-weight: 800;
-    color: #1A1F71;
+    color: #1A1F36;
     margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.step-description {
-    font-size: 16px;
+.section-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--visa-navy) 0%, var(--visa-blue) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+}
+
+.section-description {
+    font-size: 15px;
     color: #6B7280;
     margin-bottom: 2.5rem;
     line-height: 1.6;
 }
 
-div.stButton > button {
-    background: linear-gradient(135deg, #1A1F71 0%, #3B4CC0 100%);
-    color: white;
-    border-radius: 12px;
-    padding: 16px 32px;
-    font-weight: 700;
-    font-size: 16px;
-    border: none;
-    transition: all 0.3s ease;
-    width: 100%;
-    box-shadow: 0 4px 16px rgba(26, 31, 113, 0.25);
-}
-
-div.stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26, 31, 113, 0.35);
-}
-
-div.stButton > button:disabled {
-    background: #E5E7EB;
-    color: #9CA3AF;
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
+/* Form Inputs */
+.stTextInput > label {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #1A1F36 !important;
 }
 
 .stTextInput > div > div > input {
-    border: 2px solid #E5E7EB;
-    border-radius: 12px;
-    padding: 14px 18px;
-    font-size: 15px;
-    transition: all 0.3s ease;
-    background: #F9FAFB;
+    border: 1.5px solid #E4E7EB !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    font-size: 15px !important;
+    transition: all 0.2s ease !important;
 }
 
 .stTextInput > div > div > input:focus {
-    border-color: #1A1F71;
+    border-color: var(--visa-navy) !important;
+    box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.08) !important;
+}
+
+/* Checkboxes */
+.stCheckbox {
+    background: #FAFBFC;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1.5px solid #E4E7EB;
+    transition: all 0.2s ease;
+}
+
+.stCheckbox:hover {
+    border-color: var(--visa-blue);
     background: white;
-    box-shadow: 0 0 0 3px rgba(26, 31, 113, 0.1);
 }
 
-.stTextInput label {
-    font-weight: 600;
-    color: #374151;
-    font-size: 14px;
+/* Buttons */
+div.stButton > button {
+    background: linear-gradient(135deg, var(--visa-navy) 0%, var(--visa-blue) 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 14px 28px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
 }
 
+div.stButton > button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+div.stButton > button:disabled {
+    background: #E4E7EB !important;
+    color: #6B7280 !important;
+}
+
+/* Info Box */
 .info-box {
     background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-    border-left: 4px solid #3B82F6;
-    padding: 18px 22px;
+    border: 1.5px solid #3B82F6;
     border-radius: 12px;
+    padding: 16px 20px;
     margin: 1.5rem 0;
-    color: #1E40AF;
     font-size: 14px;
     line-height: 1.6;
+    color: #1E40AF;
 }
 
-.status-item {
-    background: white;
-    padding: 18px 20px;
+/* Alerts */
+.alert {
     border-radius: 12px;
-    margin-bottom: 12px;
-    border-left: 4px solid #F7B600;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 16px 20px;
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     font-size: 15px;
-    color: #374151;
     font-weight: 500;
 }
 
-.success-alert {
+.alert-success {
     background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
-    border: 2px solid #10B981;
-    padding: 20px 24px;
-    border-radius: 16px;
-    margin: 2rem 0;
-    font-size: 18px;
-    font-weight: 700;
+    border: 1.5px solid #059669;
     color: #047857;
-    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
 }
 
-.error-alert {
+.alert-error {
     background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
-    border: 2px solid #EF4444;
-    padding: 20px 24px;
-    border-radius: 16px;
-    margin: 2rem 0;
-    font-size: 18px;
-    font-weight: 700;
+    border: 1.5px solid #DC2626;
     color: #991B1B;
-    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
 }
 
+.alert-warning {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border: 1.5px solid #F59E0B;
+    color: #92400E;
+}
+
+.alert-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.alert-success .alert-icon {
+    background: #059669;
+    color: white;
+}
+
+.alert-error .alert-icon {
+    background: #DC2626;
+    color: white;
+}
+
+/* Metric Cards */
 .metric-card {
     background: white;
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 2px solid #E5E7EB;
-    text-align: center;
+    border: 1.5px solid #E4E7EB;
+    border-radius: 16px;
+    padding: 1.75rem;
     transition: all 0.3s ease;
 }
 
 .metric-card:hover {
-    border-color: #1A1F71;
-    box-shadow: 0 4px 16px rgba(26, 31, 113, 0.1);
+    border-color: var(--visa-navy);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
-.metric-value {
-    font-size: 32px;
-    font-weight: 800;
-    color: #1A1F71;
-    margin-bottom: 4px;
+.metric-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--visa-navy) 0%, var(--visa-blue) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 12px;
 }
 
 .metric-label {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 600;
     color: #6B7280;
-    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
 }
 
-.warning-alert {
-    background: #FEF3C7;
-    border: 2px solid #F59E0B;
-    padding: 18px 22px;
-    border-radius: 12px;
-    color: #92400E;
-    font-weight: 600;
-    margin: 1.5rem 0;
+.metric-value {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--visa-navy);
+    line-height: 1;
 }
 
+/* Download Button */
+.stDownloadButton > button {
+    background: linear-gradient(135deg, var(--visa-gold) 0%, #FFD700 100%) !important;
+    color: var(--visa-navy) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 12px 24px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-    .banner-title {
-        font-size: 28px;
+    .block-container {
+        padding: 1.5rem !important;
     }
-    .content-card {
-        padding: 1.5rem;
+    
+    .premium-header {
+        padding: 2rem;
+    }
+    
+    .header-title {
+        font-size: 32px;
+    }
+    
+    .stepper {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .stepper-line {
+        display: none;
     }
 }
 </style>
 """, unsafe_allow_html=True)
 
 # =========================================================
-# SESSION STATE INITIALIZATION
+# SESSION STATE
 # =========================================================
 
 if "current_step" not in st.session_state:
@@ -583,17 +560,28 @@ if "testing_data" not in st.session_state:
 # =========================================================
 
 st.markdown("""
-<div class="top-banner">
-    <div class="banner-content">
-        <div class="banner-title">Visa BI Migration Platform</div>
-        <div class="banner-subtitle">Enterprise-Grade Tableau → Power BI Migration Automation</div>
-        <div class="banner-badge">SECURE • AUTOMATED • VALIDATED</div>
+<div class="premium-header">
+    <div class="header-title">Visa BI Migration Platform</div>
+    <div class="header-subtitle">Enterprise-Grade Tableau to Power BI Migration Automation</div>
+    <div class="header-badges">
+        <div class="badge">
+            <div class="badge-icon">✓</div>
+            <span>Enterprise Secure</span>
+        </div>
+        <div class="badge">
+            <div class="badge-icon">⚡</div>
+            <span>Automated</span>
+        </div>
+        <div class="badge">
+            <div class="badge-icon">🛡</div>
+            <span>Validated</span>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
 # =========================================================
-# PROGRESS TRACKER
+# STEPPER
 # =========================================================
 
 def get_progress_width():
@@ -604,9 +592,9 @@ def get_progress_width():
     else:
         return "100%"
 
-step1_class = "progress-step active" if st.session_state.current_step == 1 else "progress-step"
-step2_class = "progress-step active" if st.session_state.current_step == 2 else "progress-step"
-step3_class = "progress-step active" if st.session_state.current_step == 3 else "progress-step"
+step1_class = "step active" if st.session_state.current_step == 1 else "step"
+step2_class = "step active" if st.session_state.current_step == 2 else "step"
+step3_class = "step active" if st.session_state.current_step == 3 else "step"
 
 if st.session_state.migration_complete:
     step1_class += " completed"
@@ -615,45 +603,47 @@ if st.session_state.deployment_complete:
 if st.session_state.testing_complete:
     step3_class += " completed"
 
-step1_icon = "✓" if st.session_state.migration_complete else "🔄"
-step2_icon = "✓" if st.session_state.deployment_complete else "🚀"
-step3_icon = "✓" if st.session_state.testing_complete else "🧪"
+step1_icon = "✓" if st.session_state.migration_complete else "1"
+step2_icon = "✓" if st.session_state.deployment_complete else "2"
+step3_icon = "✓" if st.session_state.testing_complete else "3"
 
 st.markdown(f"""
-<div class="progress-tracker">
-    <div class="progress-line">
-        <div class="progress-line-fill" style="width: {get_progress_width()};"></div>
-    </div>
-    <div class="{step1_class}">
-        <div class="progress-circle">{step1_icon}</div>
-        <div class="progress-label">Migration</div>
-    </div>
-    <div class="{step2_class}">
-        <div class="progress-circle">{step2_icon}</div>
-        <div class="progress-label">Deployment</div>
-    </div>
-    <div class="{step3_class}">
-        <div class="progress-circle">{step3_icon}</div>
-        <div class="progress-label">Testing</div>
+<div class="stepper-container">
+    <div class="stepper">
+        <div class="stepper-line">
+            <div class="stepper-line-progress" style="width: {get_progress_width()};"></div>
+        </div>
+        <div class="{step1_class}">
+            <div class="step-circle">{step1_icon}</div>
+            <div class="step-label">Migration</div>
+            <div class="step-number">Configure & Extract</div>
+        </div>
+        <div class="{step2_class}">
+            <div class="step-circle">{step2_icon}</div>
+            <div class="step-label">Deployment</div>
+            <div class="step-number">Publish & Configure</div>
+        </div>
+        <div class="{step3_class}">
+            <div class="step-circle">{step3_icon}</div>
+            <div class="step-label">Testing</div>
+            <div class="step-number">Validate & Verify</div>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Navigation buttons
+# Navigation
 col1, col2, col3 = st.columns(3)
-
 with col1:
-    if st.button("📍 Migration", key="nav1", use_container_width=True):
+    if st.button("← Migration", key="nav1", use_container_width=True):
         st.session_state.current_step = 1
         st.rerun()
-
 with col2:
-    if st.button("📍 Deployment", key="nav2", disabled=not st.session_state.migration_complete, use_container_width=True):
+    if st.button("Deployment", key="nav2", disabled=not st.session_state.migration_complete, use_container_width=True):
         st.session_state.current_step = 2
         st.rerun()
-
 with col3:
-    if st.button("📍 Testing", key="nav3", disabled=not st.session_state.deployment_complete, use_container_width=True):
+    if st.button("Testing →", key="nav3", disabled=not st.session_state.deployment_complete, use_container_width=True):
         st.session_state.current_step = 3
         st.rerun()
 
@@ -667,8 +657,11 @@ if st.session_state.current_step == 1:
     st.markdown('<div class="content-card">', unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="step-title">🔄 Migration Configuration</div>
-    <div class="step-description">
+    <div class="section-title">
+        <div class="section-icon">🔄</div>
+        <span>Migration Configuration</span>
+    </div>
+    <div class="section-description">
         Configure your Tableau to Power BI migration settings. Our automation engine will handle the complete conversion process.
     </div>
     """, unsafe_allow_html=True)
@@ -679,49 +672,42 @@ if st.session_state.current_step == 1:
         tableau_path = st.text_input(
             "Tableau Workbook Path",
             value=st.session_state.migration_data.get('tableau_path', ''),
-            placeholder="e.g., /tableau/workbooks/financial_dashboard.twbx",
-            help="Full path to your Tableau workbook file"
+            placeholder="/tableau/workbooks/financial_dashboard.twbx"
         )
         
         data_source = st.text_input(
             "Data Source Connection",
             value=st.session_state.migration_data.get('data_source', ''),
-            placeholder="e.g., sqlserver://prod-db.visa.com",
-            help="Connection string for your data source"
+            placeholder="sqlserver://prod-db.visa.com"
         )
     
     with col2:
         workspace = st.text_input(
             "Power BI Workspace",
             value=st.session_state.migration_data.get('workspace', ''),
-            placeholder="e.g., Finance-Analytics-Prod",
-            help="Target Power BI workspace name"
+            placeholder="Finance-Analytics-Prod"
         )
         
         report_name = st.text_input(
             "Report Name",
             value=st.session_state.migration_data.get('report_name', ''),
-            placeholder="e.g., Q1 Financial Dashboard",
-            help="Name for the migrated Power BI report"
+            placeholder="Q1 Financial Dashboard"
         )
     
     st.markdown("""
     <div class="info-box">
-        <strong>💡 Migration Process:</strong> Our engine will extract all data sources, calculated fields, parameters, 
-        and dashboard layouts from Tableau, then intelligently convert them to Power BI equivalents using best practices 
-        for DAX formulas and visual optimization.
+        <strong>💡 Migration Intelligence:</strong> Our engine extracts all data sources, calculated fields, parameters, 
+        and dashboard layouts from Tableau, then intelligently converts them to Power BI equivalents.
     </div>
     """, unsafe_allow_html=True)
     
-    if st.button("🚀 Start Migration", key="start_migration", use_container_width=True):
+    if st.button("🚀 Start Migration Process", key="start_migration", use_container_width=True):
         if tableau_path and workspace and data_source and report_name:
             
-            with st.spinner("Running migration process..."):
-                # Call the migration function
+            with st.spinner("Processing migration..."):
                 result = migration_function(tableau_path, workspace, data_source, report_name)
             
             if result['success']:
-                # Store migration data for next steps
                 st.session_state.migration_data = {
                     "tableau_path": tableau_path,
                     "workspace": workspace,
@@ -732,74 +718,69 @@ if st.session_state.current_step == 1:
                 }
                 
                 st.session_state.migration_complete = True
-                
-                st.markdown(f'<div class="success-alert">✅ {result["message"]}</div>', unsafe_allow_html=True)
-                
-                # Display metrics
-                col1, col2, col3, col4 = st.columns(4)
-                
-                with col1:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('data_sources', 0)}</div>
-                        <div class="metric-label">Data Sources</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                with col2:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('calculated_fields', 0)}</div>
-                        <div class="metric-label">Calculated Fields</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                with col3:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('dashboards', 0)}</div>
-                        <div class="metric-label">Dashboards</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                with col4:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('success_rate', 0)}%</div>
-                        <div class="metric-label">Success Rate</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                # Display component details
-                if 'components' in result['data']:
-                    components_df = pd.DataFrame(result['data']['components'])
-                    components_df.columns = ['Component', 'Original Count', 'Migrated', 'Status']
-                    components_df['Status'] = '✅ ' + components_df['Status']
-                    
-                    st.markdown("<br>", unsafe_allow_html=True)
-                    st.dataframe(components_df, use_container_width=True, hide_index=True)
-                    
-                    csv = components_df.to_csv(index=False)
-                    st.download_button(
-                        label="📥 Download Migration Report",
-                        data=csv,
-                        file_name=f"Migration_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                        mime="text/csv",
-                        use_container_width=True
-                    )
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                if st.button("Continue to Deployment →", key="goto_deploy", use_container_width=True):
-                    st.session_state.current_step = 2
-                    st.rerun()
+                st.rerun()
             
             else:
-                # Migration failed
-                st.markdown(f'<div class="error-alert">❌ {result["message"]}</div>', unsafe_allow_html=True)
-                st.error("Please check your inputs and try again.")
+                st.markdown(f"""
+                <div class="alert alert-error">
+                    <div class="alert-icon">✕</div>
+                    <div>{result["message"]}</div>
+                </div>
+                """, unsafe_allow_html=True)
             
         else:
-            st.error("⚠️ Please fill in all required fields to start migration.")
+            st.error("⚠️ Please fill in all required fields")
+    
+    # Show results if migration is complete
+    if st.session_state.migration_complete and st.session_state.migration_data:
+        st.markdown("""
+        <div class="alert alert-success">
+            <div class="alert-icon">✓</div>
+            <div>Migration completed successfully</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Metrics
+        cols = st.columns(4)
+        metrics = [
+            ("📊", "Data Sources", st.session_state.migration_data.get('data_sources', 0)),
+            ("📐", "Calculated Fields", st.session_state.migration_data.get('calculated_fields', 0)),
+            ("📈", "Dashboards", st.session_state.migration_data.get('dashboards', 0)),
+            ("✓", "Success Rate", f"{st.session_state.migration_data.get('success_rate', 0)}%")
+        ]
+        
+        for idx, (icon, label, value) in enumerate(metrics):
+            with cols[idx]:
+                st.markdown(f"""
+                <div class="metric-card">
+                    <div class="metric-icon">{icon}</div>
+                    <div class="metric-label">{label}</div>
+                    <div class="metric-value">{value}</div>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        # Component table
+        if 'components' in st.session_state.migration_data:
+            st.markdown("<br>", unsafe_allow_html=True)
+            components_df = pd.DataFrame(st.session_state.migration_data['components'])
+            components_df.columns = ['Component', 'Original Count', 'Migrated', 'Status']
+            components_df['Status'] = '✅ ' + components_df['Status']
+            
+            st.dataframe(components_df, use_container_width=True, hide_index=True)
+            
+            csv = components_df.to_csv(index=False)
+            st.download_button(
+                label="📥 Download Migration Report",
+                data=csv,
+                file_name=f"Migration_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv",
+                use_container_width=True
+            )
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("Continue to Deployment →", key="goto_deploy", use_container_width=True):
+            st.session_state.current_step = 2
+            st.rerun()
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -811,17 +792,23 @@ elif st.session_state.current_step == 2:
     st.markdown('<div class="content-card">', unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="step-title">🚀 Power BI Deployment</div>
-    <div class="step-description">
-        Deploy your migrated report to Power BI Service. The deployment process includes authentication, 
-        dataset publishing, and report configuration.
+    <div class="section-title">
+        <div class="section-icon">🚀</div>
+        <span>Power BI Deployment</span>
+    </div>
+    <div class="section-description">
+        Deploy your migrated report to Power BI Service with enterprise security and configurations.
     </div>
     """, unsafe_allow_html=True)
     
     if not st.session_state.migration_complete:
-        st.markdown('<div class="warning-alert">⚠️ Please complete the Migration step before proceeding to Deployment.</div>', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="alert alert-warning">
+            <div class="alert-icon">⚠</div>
+            <div>Please complete the Migration step first</div>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        # Display migration summary
         st.markdown("### 📋 Migration Summary")
         
         col1, col2 = st.columns(2)
@@ -834,7 +821,7 @@ elif st.session_state.current_step == 2:
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # Deployment configuration
+        st.markdown("### ⚙️ Deployment Configuration")
         col1, col2 = st.columns(2)
         with col1:
             enable_rls = st.checkbox("Enable Row-Level Security", value=True)
@@ -845,10 +832,9 @@ elif st.session_state.current_step == 2:
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        if st.button("🚀 Deploy to Power BI", key="start_deploy", use_container_width=True):
+        if st.button("🚀 Deploy to Power BI Service", key="start_deploy", use_container_width=True):
             
-            with st.spinner("Running deployment process..."):
-                # Call the deployment function
+            with st.spinner("Deploying to Power BI..."):
                 result = deployment_function(
                     st.session_state.migration_data,
                     enable_rls,
@@ -858,43 +844,49 @@ elif st.session_state.current_step == 2:
                 )
             
             if result['success']:
-                # Store deployment data for next step
                 st.session_state.deployment_data = result['data']
                 st.session_state.deployment_complete = True
-                
-                st.markdown(f'<div class="success-alert">✅ {result["message"]}</div>', unsafe_allow_html=True)
-                
-                # Display deployment details
-                st.markdown("### 📊 Deployment Details")
-                st.markdown(f"**Workspace:** {result['data'].get('workspace', 'N/A')}")
-                st.markdown(f"**Report:** {result['data'].get('report_name', 'N/A')}")
-                st.markdown(f"**Report ID:** {result['data'].get('report_id', 'N/A')}")
-                st.markdown(f"**Deployment Time:** {result['data'].get('deployment_time', 'N/A')}")
-                st.markdown(f"**Status:** 🟢 {result['data'].get('status', 'Unknown')}")
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                
-                # Report link
-                report_url = result['data'].get('report_url', 'https://app.powerbi.com')
-                st.link_button("🔗 Open Report in Power BI", report_url, use_container_width=True)
-                
-                st.markdown("""
-                <div class="info-box">
-                    <strong>📊 Report Preview:</strong> Your report is now live in Power BI Service. 
-                    Click the button above to view it in your workspace. You can also embed this report 
-                    in SharePoint, Teams, or other applications.
-                </div>
-                """, unsafe_allow_html=True)
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                if st.button("Continue to Testing →", key="goto_test", use_container_width=True):
-                    st.session_state.current_step = 3
-                    st.rerun()
+                st.rerun()
             
             else:
-                # Deployment failed
-                st.markdown(f'<div class="error-alert">❌ {result["message"]}</div>', unsafe_allow_html=True)
-                st.error("Please check the deployment configuration and try again.")
+                st.markdown(f"""
+                <div class="alert alert-error">
+                    <div class="alert-icon">✕</div>
+                    <div>{result["message"]}</div>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        # Show results if deployment is complete
+        if st.session_state.deployment_complete and st.session_state.deployment_data:
+            st.markdown("""
+            <div class="alert alert-success">
+                <div class="alert-icon">✓</div>
+                <div>Deployment completed successfully</div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("### 📊 Deployment Details")
+            st.markdown(f"**Workspace:** {st.session_state.deployment_data.get('workspace', 'N/A')}")
+            st.markdown(f"**Report:** {st.session_state.deployment_data.get('report_name', 'N/A')}")
+            st.markdown(f"**Report ID:** {st.session_state.deployment_data.get('report_id', 'N/A')}")
+            st.markdown(f"**Status:** 🟢 {st.session_state.deployment_data.get('status', 'N/A')}")
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            report_url = st.session_state.deployment_data.get('report_url', 'https://app.powerbi.com')
+            st.link_button("🔗 Open Report in Power BI", report_url, use_container_width=True)
+            
+            st.markdown("""
+            <div class="info-box">
+                <strong>📊 Report Access:</strong> Your report is now live in Power BI Service. 
+                Access it through the workspace or embed it in enterprise applications.
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button("Continue to Testing →", key="goto_test", use_container_width=True):
+                st.session_state.current_step = 3
+                st.rerun()
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -906,15 +898,22 @@ elif st.session_state.current_step == 3:
     st.markdown('<div class="content-card">', unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="step-title">🧪 Automated Testing & Validation</div>
-    <div class="step-description">
-        Run comprehensive validation tests to ensure your migrated report maintains data accuracy, 
-        performance standards, and visual fidelity.
+    <div class="section-title">
+        <div class="section-icon">🧪</div>
+        <span>Automated Testing & Validation</span>
+    </div>
+    <div class="section-description">
+        Run comprehensive validation tests to ensure data accuracy and performance standards.
     </div>
     """, unsafe_allow_html=True)
     
     if not st.session_state.deployment_complete:
-        st.markdown('<div class="warning-alert">⚠️ Please complete the Deployment step before proceeding to Testing.</div>', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="alert alert-warning">
+            <div class="alert-icon">⚠</div>
+            <div>Please complete the Deployment step first</div>
+        </div>
+        """, unsafe_allow_html=True)
     else:
         st.markdown("### 🔧 Test Configuration")
         
@@ -932,7 +931,6 @@ elif st.session_state.current_step == 3:
         
         if st.button("🧪 Run Validation Suite", key="start_test", use_container_width=True):
             
-            # Prepare test configuration
             test_config = {
                 'data_accuracy': test_data_accuracy,
                 'calculations': test_calculations,
@@ -942,55 +940,42 @@ elif st.session_state.current_step == 3:
                 'accessibility': test_accessibility
             }
             
-            with st.spinner("Running test suite..."):
-                # Call the testing function
+            with st.spinner("Running validation tests..."):
                 result = testing_function(st.session_state.deployment_data, test_config)
             
             if result['success']:
-                # Store testing data
                 st.session_state.testing_data = result['data']
                 st.session_state.testing_complete = True
                 
-                st.markdown(f'<div class="success-alert">✅ {result["message"]}</div>', unsafe_allow_html=True)
+                st.markdown(f"""
+                <div class="alert alert-success">
+                    <div class="alert-icon">✓</div>
+                    <div>{result["message"]}</div>
+                </div>
+                """, unsafe_allow_html=True)
                 
-                # Display test metrics
-                col1, col2, col3, col4 = st.columns(4)
+                # Metrics
+                cols = st.columns(4)
+                metrics = [
+                    ("📊", "Accuracy", f"{result['data'].get('accuracy', 0)}%"),
+                    ("📐", "Calculations", f"{result['data'].get('calculations_verified', 0)}/156"),
+                    ("📈", "Visuals", f"{result['data'].get('visuals_validated', 0)}/18"),
+                    ("⚡", "Query Time", f"{result['data'].get('avg_query_time', 0)}s")
+                ]
                 
-                with col1:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('accuracy', 0)}%</div>
-                        <div class="metric-label">Data Accuracy</div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                for idx, (icon, label, value) in enumerate(metrics):
+                    with cols[idx]:
+                        st.markdown(f"""
+                        <div class="metric-card">
+                            <div class="metric-icon">{icon}</div>
+                            <div class="metric-label">{label}</div>
+                            <div class="metric-value">{value}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
                 
-                with col2:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('calculations_verified', 0)}/{result['data'].get('calculations_verified', 0)}</div>
-                        <div class="metric-label">Calculations Verified</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                with col3:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('visuals_validated', 0)}/{result['data'].get('visuals_validated', 0)}</div>
-                        <div class="metric-label">Visuals Validated</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                with col4:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <div class="metric-value">{result['data'].get('avg_query_time', 0)}s</div>
-                        <div class="metric-label">Avg Query Time</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                # Display test results table
+                # Results table
                 if 'test_results' in result['data']:
-                    st.markdown("### 📊 Detailed Test Results")
+                    st.markdown("<br>", unsafe_allow_html=True)
                     
                     test_df = pd.DataFrame(result['data']['test_results'])
                     test_df.columns = ['Test Category', 'Tests Run', 'Passed', 'Failed', 'Status']
@@ -1011,7 +996,7 @@ elif st.session_state.current_step == 3:
                 <div class="info-box">
                     <strong>🎉 Migration Complete!</strong><br>
                     Your Tableau workbook has been successfully migrated, deployed, and validated. 
-                    The Power BI report is now ready for production use. All tests have passed with 100% accuracy.
+                    The Power BI report is now ready for production use.
                 </div>
                 """, unsafe_allow_html=True)
                 
@@ -1027,9 +1012,12 @@ elif st.session_state.current_step == 3:
                     st.rerun()
             
             else:
-                # Testing failed
-                st.markdown(f'<div class="error-alert">❌ {result["message"]}</div>', unsafe_allow_html=True)
-                st.error("Please review the test configuration and try again.")
+                st.markdown(f"""
+                <div class="alert alert-error">
+                    <div class="alert-icon">✕</div>
+                    <div>{result["message"]}</div>
+                </div>
+                """, unsafe_allow_html=True)
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1038,10 +1026,10 @@ elif st.session_state.current_step == 3:
 # =========================================================
 
 st.markdown("""
-<div style="text-align: center; color: #6B7280; font-size: 13px; padding: 2rem 0; margin-top: 3rem;">
-    <strong>Visa BI Migration Platform</strong> • Enterprise Edition • 
-    <a href="#" style="color: #1A1F71; text-decoration: none;">Documentation</a> • 
-    <a href="#" style="color: #1A1F71; text-decoration: none;">Support</a> • 
-    <a href="#" style="color: #1A1F71; text-decoration: none;">Contact</a>
+<div style="text-align: center; padding: 2rem 0; color: #6B7280; font-size: 13px; margin-top: 3rem; border-top: 1px solid #E4E7EB;">
+    <strong>Visa BI Migration Platform</strong> • Enterprise Edition v1.0<br>
+    <a href="#" style="color: var(--visa-navy); text-decoration: none;">Documentation</a> • 
+    <a href="#" style="color: var(--visa-navy); text-decoration: none;">Support</a> • 
+    <a href="#" style="color: var(--visa-navy); text-decoration: none;">Contact</a>
 </div>
 """, unsafe_allow_html=True)
